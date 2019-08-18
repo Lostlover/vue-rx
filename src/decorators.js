@@ -1,9 +1,9 @@
-import { Subscription as SubscriptionRx } from "rxjs";
+import { Subscription } from "rxjs";
 import { defineReactive } from "./util";
 
 export const subscriptionSymbol = Symbol("subscription");
 
-export function Subscription(key, options) {
+export function ObservableData(key, options) {
   return function(vm, name, describer) {
     const curKey = key || `${name}$`;
     const created = vm.created;
@@ -19,7 +19,7 @@ export function Subscription(key, options) {
           throw error;
         }
       );
-      context[subscriptionSymbol] = new SubscriptionRx();
+      context[subscriptionSymbol] = new Subscription();
       context[subscriptionSymbol].add(s);
       context._subscriptions && vm._subscriptions.add(s);
 
